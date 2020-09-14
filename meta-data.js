@@ -33,7 +33,6 @@ const db = [];
 		});
 	}
 
-	console.log(db);
 	fs.writeFileSync(
 		path.join(__dirname, 'meta-data.json'),
 		JSON.stringify(db, null, '\t'),
