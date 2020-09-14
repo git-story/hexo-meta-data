@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /*
  * meta-data.js
  * Created on Tue Aug 04 2020
