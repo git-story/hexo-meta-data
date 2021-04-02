@@ -26,7 +26,7 @@ mhexo.init()
 				title: post.title,
 				href: post.path,
 				updated: utc,
-				src: post.source,
+				src: path.join(sourceDir, post.source),
 				categories: post.categories.data,
 				tags: post.tags.data,
 				cover: post.cover,
