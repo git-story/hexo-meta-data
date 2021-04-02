@@ -26,9 +26,11 @@ mhexo.init()
 				title: post.title,
 				href: post.path,
 				updated: utc,
-				src: path.join(sourceDir, post.path),
+				src: post.source,
 				categories: post.categories.data,
 				tags: post.tags.data,
+				cover: post.cover,
+				content: post.content,
 			});
 		}
 
