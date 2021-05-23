@@ -27,8 +27,8 @@ mhexo.init()
 				href: post.path,
 				updated: utc,
 				src: path.join(sourceDir, post.source),
-				categories: post.categories.data,
-				tags: post.tags.data,
+				categories: post.categories.data.map(c => c.name),
+				tags: post.tags.data.map(t => t.name),
 				cover: post.cover,
 				content: post.content,
 			});
