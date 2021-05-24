@@ -7,6 +7,7 @@
 
 const path = require('path');
 const fs = require('fs');
+const cheerio = require('cheerio');
 
 const MHexo = require('hexo');
 const mhexo = new MHexo(process.cwd(), {});
@@ -20,6 +21,8 @@ const dateSort = (a, b) => {
 	return bd.getTime() - ad.getTime();
 };
 
+const MAX_CONTENT_LENGTH = 50;
+
 mhexo.init()
 	.then(() => mhexo.load())
 	.then(() => {
@@ -30,6 +33,13 @@ mhexo.init()
 			const date = post.date.utc().format();
 			const updated = post.updated.utc().format();
 
+			const $ = cheerio.load(post.content);
+			let content = $.text();
+			content = content.replace(/\n/g, ' ');
+			if ( content.length > MAX_CONTENT_LENGTH ) {
+				content = content.substr(0, MAX_CONTENT_LENGTH) + ' ...';
+			}
+
 			db.push({
 				title: post.title,
 				href: post.path,
@@ -39,7 +49,7 @@ mhexo.init()
 				categories: post.categories.data.map(c => c.name),
 				tags: post.tags.data.map(t => t.name),
 				cover: post.cover,
-				content: post.content,
+				content,
 			});
 		}
 
