@@ -9,6 +9,15 @@ const path = require('path');
 const fs = require('fs');
 const cheerio = require('cheerio');
 
+let config = {};
+try {
+	config = JSON.parse(fs.readFileSync('./.mdrc', 'utf8'));
+} catch {
+	config = {
+		max_content_length: 50,
+	};
+}
+
 const MHexo = require('hexo');
 const mhexo = new MHexo(process.cwd(), {});
 
@@ -28,7 +37,6 @@ function validateUrl(value) {
 
 
 const MAX_CONTENT_LENGTH = 50;
-
 mhexo.init()
 	.then(() => mhexo.load())
 	.then(() => {
@@ -42,8 +50,8 @@ mhexo.init()
 			const $ = cheerio.load(post.content);
 			let content = $.text();
 			content = content.replace(/\n/g, ' ');
-			if ( content.length > MAX_CONTENT_LENGTH ) {
-				content = content.substr(0, MAX_CONTENT_LENGTH) + ' ...';
+			if ( config.max_content_length >= 0 && content.length > config.max_content_length ) {
+				content = content.substr(0, config.max_content_length) + ' ...';
 			}
 
 			let cover = post.cover;
