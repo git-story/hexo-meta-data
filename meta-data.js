@@ -13,6 +13,13 @@ const mhexo = new MHexo(process.cwd(), {});
 
 const db = [];
 
+const dateSort = (a, b) => {
+	const ad = new Date(a.date);
+	const bd = new Date(b.date);
+
+	return bd.getTime() - ad.getTime();
+};
+
 mhexo.init()
 	.then(() => mhexo.load())
 	.then(() => {
@@ -38,7 +45,7 @@ mhexo.init()
 
 		fs.writeFileSync(
 			path.join(process.cwd(), 'meta-data.json'),
-			JSON.stringify(db, null, '\t'),
+			JSON.stringify(db.sort(dateSort), null, '\t'),
 			{ encoding: 'utf8' }
 		);
 		mhexo.exit();
