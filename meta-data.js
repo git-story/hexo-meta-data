@@ -20,12 +20,14 @@ mhexo.init()
 		const query = mhexo.locals.get('posts');
 		for ( let i=0; i < query.length;i++ ) {
 			const post = query.data[i];
-			const utc = post.updated.utc().format();
+			const date = post.date.utc().format();
+			const updated = post.updated.utc().format();
 
 			db.push({
 				title: post.title,
 				href: post.path,
-				updated: utc,
+				date,
+				updated,
 				src: path.join(sourceDir, post.source),
 				categories: post.categories.data.map(c => c.name),
 				tags: post.tags.data.map(t => t.name),
